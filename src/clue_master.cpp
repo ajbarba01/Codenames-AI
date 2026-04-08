@@ -1,7 +1,7 @@
+#include <cmath>
 #include <fstream>
 #include <iostream>
 
-#include "clue_master.h"
 #include "clue_master/clue_master.h"
 #include "clue_master/util.h"
 
@@ -11,8 +11,32 @@ ClueMaster::ClueMaster()
     {
         return;
     }
+
+    // string *board = game.get_board();
+    // for (int i = 0; i < 25; i++)
+    // {
+    //     string word = board[i];
+    //     cout << word << ": " << to_string(get_similarity(word, "dog")) <<
+    //     endl;
+    // }
 }
 
+void ClueMaster::check_words()
+{
+    ifstream file("data/words-eng.txt");
+    string line;
+
+    vector<string> words = game.get_all_words();
+
+    for (int i = 0; i < words.size(); i++)
+    {
+        string &word = words[i];
+        if (word_to_idx.count(word) == 0)
+        {
+            cout << word << endl;
+        }
+    }
+}
 float *ClueMaster::get_vector(const string &word)
 {
     auto it = word_to_idx.find(word);
@@ -47,7 +71,7 @@ float ClueMaster::get_similarity(float *vec_1, float *vec_2)
         norm2 += vec_2[i] * vec_2[i];
     }
 
-    float denom = std::sqrt(norm1) * std::sqrt(norm2);
+    float denom = sqrt(norm1) * sqrt(norm2);
 
     if (denom == 0.0f)
         return 0.0f;
@@ -55,14 +79,17 @@ float ClueMaster::get_similarity(float *vec_1, float *vec_2)
     return dot / denom;
 }
 
-float ClueMaster::get_avg_similarity(const string &word, string *words) {}
+float ClueMaster::get_avg_similarity(const string &word, string *words)
+{
+    return 0.0f;
+}
 
 bool ClueMaster::load_words()
 {
-    int num_words = 30000;
+    int num_words = 50000;
 
-    string words_file = "top_" + to_string(num_words) + ".txt";
-    string glove_file = "top_" + to_string(num_words) + ".bin";
+    string words_file = "data/top_" + to_string(num_words) + ".txt";
+    string glove_file = "data/top_" + to_string(num_words) + ".bin";
 
     ifstream txt(words_file);
     if (!txt)

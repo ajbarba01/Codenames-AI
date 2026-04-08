@@ -7,20 +7,26 @@
 
 #include "tile.h"
 
+using namespace std;
+
 class CodeNames
 {
-
-  private:
-    // 2d vector
-    std::string board[25];
-    std::unordered_map<std::string, Tile> all_words;
-    std::unordered_map<Tile, std::vector<std::string>> word_categories;
 
   public:
     CodeNames();
 
-    bool word_in_group(std::string word, Tile word_type);
-    std::vector<std::string> get_group(Tile word_type);
+    string *get_board() { return board; }
+    vector<string> get_all_words() { return all_words; }
+
+    bool word_in_group(const string &word, Tile word_type);
+    vector<string> get_group(Tile word_type);
 
     void print_board();
+
+  private:
+    // 2d vector
+    string board[25];
+    vector<string> all_words;
+    unordered_map<string, Tile> words;
+    unordered_map<Tile, vector<string>> word_categories;
 };

@@ -5,7 +5,6 @@
 #include <vector>
 
 #include "clue_master/code_names.h"
-#include "clue_master/glove_vector.h"
 
 using namespace std;
 
@@ -14,6 +13,8 @@ class ClueMaster
 
   public:
     ClueMaster();
+
+    void check_words();
 
   private:
     bool load_words();

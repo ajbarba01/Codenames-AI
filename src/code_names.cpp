@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <random>
@@ -14,26 +15,26 @@ CodeNames::CodeNames()
 {
     // gen board
 
-    vector<string> words;
     ifstream file("data/words-eng.txt");
     string line;
 
     while (getline(file, line))
     {
-        words.push_back(normalize_word(line));
+        all_words.push_back(normalize_word(line));
     }
 
     file.close();
 
-    sample(words.begin(), words.end(), board, size(board),
+    sample(all_words.begin(), all_words.end(), begin(board), size(board),
            mt19937{random_device{}()});
 
     Tile tiles[] = {Tile::BLUE, Tile::RED, Tile::BYSTANDER, Tile::ASSASSIN};
-    int word_nums[] = {9, 8, 8, 1};
+    int word_nums[] = {9, 8, 7, 1};
 
     Tile current_tile;
     int current_num;
     int index = 0;
+
     for (int i = 0; i < 4; i++)
     {
         current_num = word_nums[i];
@@ -43,7 +44,7 @@ CodeNames::CodeNames()
         {
             string word = board[w];
             word_categories[current_tile].push_back(word);
-            all_words[word] = current_tile;
+            words[word] = current_tile;
         }
 
         index += current_num;
@@ -52,9 +53,9 @@ CodeNames::CodeNames()
     shuffle(board, board + size(board), mt19937{random_device{}()});
 }
 
-bool CodeNames::word_in_group(string word, Tile word_type)
+bool CodeNames::word_in_group(const string &word, Tile word_type)
 {
-    return (all_words.count(word) > 0);
+    return (words.count(word) > 0);
 }
 
 vector<string> CodeNames::get_group(Tile word_type)

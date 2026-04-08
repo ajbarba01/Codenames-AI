@@ -1,8 +1,9 @@
-#include "clue_master/code_names.h"
+#include <iostream>
+
+#include "clue_master/clue_master.h"
 
 int main(int argc, char **argv)
 {
-    CodeNames game = CodeNames();
-
-    game.print_board();
+    ClueMaster game = ClueMaster();
+    game.check_words();
 };

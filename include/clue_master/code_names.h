@@ -15,16 +15,15 @@ class CodeNames
   public:
     CodeNames();
 
-    string *get_board() { return board; }
-    vector<string> get_all_words() { return all_words; }
+    const string *get_board() { return board; }
+    const vector<string> get_all_words() { return all_words; }
 
     bool word_in_group(const string &word, Tile word_type);
-    vector<string> get_group(Tile word_type);
+    const vector<string> get_group(Tile word_type);
 
     void print_board();
 
   private:
-    // 2d vector
     string board[25];
     vector<string> all_words;
     unordered_map<string, Tile> words;
